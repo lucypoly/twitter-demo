@@ -12,11 +12,11 @@
     "morgan": "~1.9.0",
     "node-sass-chokidar": "^1.2.2",
     "npm-run-all": "^4.1.2",
+    "oauth": "^0.9.15",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1",
-    "react-twitter-widgets": "^1.7.1",
-    "twitter": "^1.7.1"
+    "react-twitter-widgets": "^1.7.1"
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const client = require('./../client');
+const client = require('../oauth');
 
 /**
  * Returns a collection of relevant Tweets matching a specified query
