@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Search.css';
 
 class Search extends Component {
   constructor(props) {
@@ -9,9 +10,7 @@ class Search extends Component {
   }
 
   fetchTag(tag) {
-    fetch(`/search/${tag}`)
-      .then(res => res.json())
-      .then(data => console.log(data));
+    this.props.getTimelines(tag);
   }
 
   handleChange = (event) => {
@@ -26,14 +25,16 @@ class Search extends Component {
 
   render() {
     return (
-      <label>
+      <div className="container">
+        <span className="anchor">#</span>
         <input type="text"
           value={this.state.tag}
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+          className="search" />
         <i className="fa fa-search"
           aria-hidden="true"
           onClick={this.handleClick}> </i>
-      </label>
+      </div>
     );
   }
 }

@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 50px 0;
+  color: #F2A595;
+}
+
+.anchor {
+  font-size: 34px;
+  margin-right: 10px;
+}
+
+.fa-search {
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 34px;
+  vertical-align: middle;
+}
+
+.search {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 24px;
+  outline: 0;
+}
