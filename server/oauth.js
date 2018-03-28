@@ -1,4 +1,5 @@
 const OAuth = require('OAuth');
+
 const oauth = new OAuth.OAuth(
   'https://api.twitter.com/oauth/request_token',
   'https://api.twitter.com/oauth/access_token',

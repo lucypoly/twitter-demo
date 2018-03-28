@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const client = require('../oauth');
+const oauth = require('../oauth');
+const constants = require('../constants');
 
 /**
  * Returns a collection of relevant Tweets matching a specified query
@@ -8,9 +9,11 @@ const client = require('../oauth');
  * @count - The number of tweets to return per page, up to a maximum of 100
  * **/
 router.get('/:id', (req, res) => {
-  client.get('search/tweets', {q: '#' + req.params.id, count: 10}, function (error, tweets, response) {
-    res.send(tweets);
-  });
+  oauth.get(
+    constants.BASE + 'search/tweets.json?q=' + req.params.id + '&count=10', constants.TOKEN, constants.SECRET,
+    function (e, data, response) {
+      res.send(data);
+    });
 });
 
 module.exports = router;
