@@ -43,25 +43,25 @@ const constants = require('../constants');
  * Retrieve the identified Collection, presented as a list of the Tweets curated within
  * @id - The identifier of the Collection for which to return results
  * **/
-async function searchTweets(id, fn) {
-  oauth.get(
+const searchTweets = (id) => new Promise((resolve, reject) => {
+  return oauth.get(
     constants.BASE + 'search/tweets.json?q=' + id + '&count=10', constants.TOKEN, constants.SECRET,
     (e, data, response) => {
-      fn(JSON.stringify(data))
+        resolve(JSON.parse(data));
     });
-}
+});
 
 /**
  * Create a Collection owned by the currently authenticated user
  * @name - The title of the collection being created, in 25 characters or less
  * **/
-async function createTimeline(name, fn) {
-  oauth.post(
+const createTimeline = (name) => new Promise((resolve, reject) => {
+  return oauth.post(
     constants.BASE + 'collections/create.json?name=' + name, constants.TOKEN, constants.SECRET,
     (e, data, response) => {
-      fn(JSON.stringify(data))
+        resolve(JSON.parse(data));
     });
-}
+});
 
 /**
  * Returns a collection of relevant Tweets matching a specified query
@@ -74,26 +74,22 @@ function addTweets(params) {
     JSON.stringify(params), 'application/json', (e, data, response) => JSON.parse(data));
 }
 
-async function getTimeline(id) {
+getTimeline = async (id) => {
   const timeline = {};
-  let data = {};
-  let collection = {};
   let tweets;
   let params;
 
-  await searchTweets(id, (result) => {
-    data = result;
-    console.log(data);
-  });
-  timeline.next_results = data.search_metadata.next_results;
+  let result = await searchTweets(id);
+  timeline.next_results = result.search_metadata.next_results;
+  console.log(timeline);
 
-  await createTimeline(id, (result) => {
-    collection = result;
-  });
+  let collection = await createTimeline(id);
+  console.log(collection);
 
   tweets = collection.statuses.map(item => item.id_str);
   params = { id: timeline.id };
   timeline.id = collection.response.timeline_id;
+  console.log(timeline);
 
   params.changes = tweets.map(tweet => {
     return { op: 'add', tweet_id: tweet };
@@ -102,7 +98,7 @@ async function getTimeline(id) {
   addTweets(params);
 
   return timeline;
-}
+};
 
 
 router.get('/:id', (req, res) => {
